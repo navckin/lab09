@@ -1,6 +1,6 @@
 # lab08
 ## Laboratory work VIII
-
+[![Build Status](https://travis-ci.com/navckin/lab06.svg?branch=main)](https://travis-ci.com/navckin/lab06)
 Данная лабораторная работа посвещена изучению систем автоматизации развёртывания и управления приложениями на примере **Docker**
 
 ```sh
