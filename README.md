@@ -45,6 +45,7 @@ $ git remote add origin https://github.com/${GITHUB_USERNAME}/lab08
  Сам Docker необходим для программы и скрипта, проекта, чтобы создавать не вдаваясь в подробности, на какой вм они открываются
 (те докер - это как вм, только управляется не мышкой, а командами)
 
+```sh
 $ cat > Dockerfile <<EOF
 FROM ubuntu:18.04
 EOF
@@ -60,7 +61,7 @@ RUN apt update
 RUN apt install -yy gcc g++ cmake
 EOF
 ```
-6. Копируем то, что есть в тек. каталоге в принт и объявлем принт. (те есть все что мы перенесли в принт- мы объявляем текущим каталогом)
+6. Копируем то, что есть в тек. каталоге в принт и объявлем принт. (те есть все, что мы перенесли в принт- мы объявляем текущим каталогом)
 ```sh
 $ cat >> Dockerfile <<EOF
 
@@ -80,7 +81,7 @@ RUN cmake --build _build --target install
 EOF
 ```
 8. env - некая команда, которая позволяет задать какую-то переменную. мы создаем переменную LOG_PATH(ее назавнаие),а ее значение это (путь..) /home/logs/log.txt
-примерно то же самое что елси бы сделали export
+примерно то же самое, если бы сделали export
 
 ```sh
 $ cat >> Dockerfile <<EOF
@@ -111,7 +112,7 @@ ENTRYPOINT ./demo
 EOF
 ```
 Кратко о сделанном: мы создали весь файл, который явл. скриптом в своем собственном формате. Можем вызывать саму утилиту докер, которая будет создавать машину, которая будет "для нас" работать.
-  12. вызываем утилиту docker. -t это тег. тег - logger
+12. вызываем утилиту docker. -t это тег. тег - logger
 ```sh
 $ docker build -t logger .
 ```
@@ -147,41 +148,32 @@ $ cat logs/log.txt
 ```sh
 $ gsed -i 's/lab07/lab08/g' README.md
 ```
-
+18. У ВМ-ы есть командыный режим, когда в клавиши вкладываем какие-то комады. это режим по умочанию. Основные команды ввода в текста: i a I o O;
 ```sh
 $ vim .travis.yml
 /lang<CR>o
 services:
-- docker<ESC>
+- docker<ESC> //  сама клавиша
 jVGdo
 script:
 - docker build -t logger .<ESC>
 :wq
 ```
-
+18. Выполянем заполнение репозитория: добавляем Dockerfile, .travis.yml. Выполняем коминт и пуш.
 ```sh
 $ git add Dockerfile
 $ git add .travis.yml
 $ git commit -m"adding Dockerfile"
 $ git push origin master
 ```
-
+19. Нужно сделать Docker работающим внутри travis'а. Выполянем это.
 ```sh
 $ travis login --auto
 $ travis enable
 ```
+*если есть синтаксические ошибки - выдаст ошибки в самом билде.
 
-## Report
 
-```sh
-$ popd
-$ export LAB_NUMBER=08
-$ git clone https://github.com/tp-labs/lab${LAB_NUMBER} tasks/lab${LAB_NUMBER}
-$ mkdir reports/lab${LAB_NUMBER}
-$ cp tasks/lab${LAB_NUMBER}/README.md reports/lab${LAB_NUMBER}/REPORT.md
-$ cd reports/lab${LAB_NUMBER}
-$ edit REPORT.md
-$ gist REPORT.md
 ```
 
 ## Links
