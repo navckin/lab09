@@ -1,185 +1,132 @@
-# Laboratory work VIII
+## Laboratory work IX
 
-Данная лабораторная работа посвещена изучению систем автоматизации развёртывания и управления приложениями на примере **Docker**
+Данная лабораторная работа посвещена изучению процесса создания артефактов на примере **Github Release**
 
 ```sh
-$ open https://docs.docker.com/get-started/
+$ open https://help.github.com/articles/creating-releases/
 ```
 
 ## Tasks
 
-- [+] 1. Создать публичный репозиторий с названием **lab08** на сервисе **GitHub**
-- [+] 2. Ознакомиться со ссылками учебного материала
-- [+] 3. Выполнить инструкцию учебного материала
-- [+] 4. Составить отчет и отправить ссылку личным сообщением в **Slack**
+- [х] 1. Создать публичный репозиторий с названием **lab09** на сервисе **GitHub**
+- [х]  2. Ознакомиться со ссылками учебного материала
+- [х] 3. Получить токен для доступа к репозиториям сервиса **GitHub**
+- [х]  4. Выполнить инструкцию учебного материала
+- [х] 5. Составить отчет и отправить ссылку личным сообщением в **Slack**
 
 ## Tutorial
-1. Присваиваем <имя_пользователя> в переменную GITHUB_USERNAME. Команда export - предназначена для экспорта переменных и функций текущего процесса в дочерний процесс.
 
 ```sh
-$ export GITHUB_USERNAME=<имя_пользователя> 
+$ export GITHUB_TOKEN=<полученный_токен>         #присваиваем сгенирированный токен в переменную GITHUB_TOKEN
+$ export GITHUB_USERNAME=<имя_пользователя>     #присваиваем имя пользователя GitHub в переменную GITHUB_USERNAME
+$ export PACKAGE_MANAGER=<пакетный менеджер>   #указываем используемый пакетный менеджер
+$ export GPG_PACKAGE_NAME=<gpg2|gpg>          #указываем, в какой утилите будет создаваться ключ
 ```
-2. Переходим в репозиторий workspace
-   Добавляем в стек текущий каталог. Команда  pushd . - для упрощения переходов между каталогами файловой системы. Используется для запоминания текущего каталога в виртуальном стеке каталогов и переходу в указанный параметром командной строки.
-   Выполняем скрипт
-```
-$ cd ${GITHUB_USERNAME}/workspace
-$ pushd .
-$ source scripts/activate
-```
-3. Копируем репозиторий лаб07 в папку лаб08
-   Переходим в дерикторию лаб08
-   Клонируем нужные версии сабмодулей
-   Удаляем старую ссылку репозитория
-   Добавляем ссылку репозитория в управление репозиториями
-```sh
-$ git clone https://github.com/${GITHUB_USERNAME}/lab07 lab08
-$ cd lab08
-$ git submodule update --init
-$ git remote remove origin
-$ git remote add origin https://github.com/${GITHUB_USERNAME}/lab08
-```
-4.  В файле Dockerfile указывается опрец система, где будем работать, и ее версия.
-    Dockerfile -это некий доп. файл, в котором содержится инструкция для заполнения докер-контейнера.
- Сам Docker необходим для программы и скрипта, проекта, чтобы создавать не вдаваясь в подробности, на какой вм они открываются
-(те докер - это как вм, только управляется не мышкой, а командами)
 
 ```sh
-$ cat > Dockerfile <<EOF
-FROM ubuntu:18.04
-EOF
+# for *-nix system
+$ $PACKAGE_MANAGER install xclip                     #скачиваем утилиту xclip
+Updating Homebrew...
+==> Auto-updated Homebrew!
+....................................
+$ alias gsed=sed                                    #заменяем команду sed на gsed
+$ alias pbcopy='xclip -selection clipboard'        #заменяем команду pbcopy на xclip -selection clipboard
+$ alias pbpaste='xclip -selection clipboard -o'   #заменяем команду pbpaste на xclip -selection clipboard -o
 ```
-5. 1). задаем любые команды, которые мы могли бы записать в баше, конкретно сейчас : обновить систему установки программ
-   2). эту строчку трактуем так же, как и если бы писали ее в консоли линукс, те мы устанавливаем пакеты (три штуки)
--yy- говорит о том, что в процессе установки на все вопросы мы отвечаем yes
 
 ```sh
-$ cat >> Dockerfile <<EOF
-
-RUN apt update
-RUN apt install -yy gcc g++ cmake
-EOF
+$ cd ${GITHUB_USERNAME}/workspace                #спускаемся в workspace
+$ pushd .                                       #добавляем в стек текущий каталог
+$ source scripts/activate                      #выполняем скрипт
+$ go get github.com/aktau/github-release      #скачивание и установка пакета Go, для работы с релизами Github
+go: downloading github.com/aktau/github-release v0.10.0
+go: downloading github.com/dustin/go-humanize v1.0.0
+go: downloading github.com/voxelbrain/goptions v0.0.0-20180630082107-58cddc247ea2
+go: downloading github.com/github-release/github-release v0.10.0
+go: downloading github.com/tomnomnom/linkheader v0.0.0-20180905144013-02ca5825eb80
+go: downloading github.com/kevinburke/rest v0.0.0-20210506044642-5611499aa33c
 ```
-6. Копируем то, что есть в тек. каталоге в принт и объявлем принт. (те есть все, что мы перенесли в принт- мы объявляем текущим каталогом)
-```sh
-$ cat >> Dockerfile <<EOF
-
-COPY . print/
-WORKDIR print
-EOF
-```
-7. RUN'ы для тестирования сборки и инсталляции проекта
-(по сути это то, что уже сделано в пр-их работах)
 
 ```sh
-$ cat >> Dockerfile <<EOF
-
-RUN cmake -H. -B_build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=_install
-RUN cmake --build _build
-RUN cmake --build _build --target install
-EOF
+$ git clone https://github.com/${GITHUB_USERNAME}/lab081 projects/lab09   #клонируем репозиторий из lab08 в директорию projects/lab09
+$ cd projects/lab09                                                     #переходим директорию projects/lab09
+$ git remote remove origin                                            #удаляем старую ссылку репозитория
+$ git remote add origin https://github.com/${GITHUB_USERNAME}/lab09  #добавляем ссылку репозитория в управление репозиториями
 ```
-8. env - некая команда, которая позволяет задать какую-то переменную. мы создаем переменную LOG_PATH(ее назавнаие),а ее значение это (путь..) /home/logs/log.txt
-примерно то же самое, если бы сделали export
 
 ```sh
-$ cat >> Dockerfile <<EOF
-
-ENV LOG_PATH /home/logs/log.txt
-EOF
+$ gsed -i -e 's/lab081/lab09/g' README.md                #поменяем в README.md все строки lab08 на lab09
 ```
-9. создаем доп.каталог для logs
-```sh
-$ cat >> Dockerfile <<EOF
-
-VOLUME /home/logs
-EOF
-```
-10. создаем WORKDIR: он после всего, что сделает с симэйком, перейдаст в _install/bin
-```sh
-$ cat >> Dockerfile <<EOF
-
-WORKDIR _install/bin
-EOF
-```
-11. эта команда вызывает утилиту demo, что была создана в предыдущих лабораторных. 
 
 ```sh
-$ cat >> Dockerfile <<EOF
-
-ENTRYPOINT ./demo
-EOF
+$ $PACKAGE_MANAGER install ${GPG_PACKAGE_NAME}         #устанавливаем программу GPG для шифрования информации и создания электронных цифровых подписей
+==> Downloading https://ghcr.io/v2/homebrew/core/gmp/manifests/6.2.1
+######################################################################## 100.0%
+==> Downloading ................................................................
+$ gpg --list-secret-keys --keyid-format LONG           #проверяем на наличие ранее созданных ключей
+gpg: создан каталог '/Users/user/.gnupg'
+gpg: создан щит с ключами '/Users/user/.gnupg/pubring.kbx'
+gpg: /Users/user/.gnupg/trustdb.gpg: создана таблица доверия
+$ gpg --full-generate-key                                 #гененрируем ключ
+$ gpg --list-secret-keys --keyid-format LONG     #выводим в консоль сгенерированный ключ
+$ GPG_KEY_ID=$(gpg --list-secret-keys --keyid-format LONG | grep ssb | tail -1 | awk '{print $2}' | awk -F'/' '{print $2}') # cоздаем переменной окружения с сохраненным в ней публичным ключом
+$ GPG_SEC_KEY_ID=$(gpg --list-secret-keys --keyid-format LONG | grep sec | tail -1 | awk '{print $2}' | awk -F'/' '{print $2}') #cоздаем переменной окружения с сохраненным в ней секретным ключом
+$ gpg --armor --export ${GPG_KEY_ID} | pbcopy  #выводим ключ в ASCII
+$ pbpaste                                    #копируем ключ в буфер
+$ open https://github.com/settings/keys         #открываем Github ключ
+$ git config user.signingkey ${GPG_SEC_KEY_ID} #добавляем секретный ключ в Github
+$ git config gpg.program gpg
 ```
-Кратко о сделанном: мы создали весь файл, который явл. скриптом в своем собственном формате. Можем вызывать саму утилиту докер, которая будет создавать машину, которая будет "для нас" работать.
-12. вызываем утилиту docker. -t это тег. тег - logger
-```sh
-$ docker build -t logger .
-```
-13. позволяет вывести (просмотреть) список, тех  ВМ, что есть
-
-```sh
-$ docker images
-```
-14.  Мы находимся сейчас в раб папке,где мы можем вызывать докер. Мы хотим развернуть ВМ и для этого мы 
-создаем logs. Затем: делаем docker run - запуск машины, -it - подключаем к машине терминал. после этого нужно подключить каталог, что мы создали внутрь машины. Испольузем -v для этого. logger - это имя машины, которую мы назвали в докер билт.
-  Должна быть выведена работа утилиты demo. Все, что проспиано в качестве команд будет выведено на экран.
-
-  
-```sh 
-$ mkdir logs
-$ docker run -it -v "$(pwd)/logs/:/home/logs/" logger
-text1
-text2
-text3
-<C-D>
-```
-15. docker inspect logger - показывает, что происходит с машиной, оно не информативное, для более сложного управления.
-  (говорит упала не упала и тд) 
 
 ```sh
-$ docker inspect logger
-```
-16. cat logs/log.txt позволяет посмотреть, что утилита вывела в лог
-```sh
-$ cat logs/log.txt
-```
-17. Заменяем README.md 
-```sh
-$ gsed -i 's/lab07/lab08/g' README.md
-```
-18. У ВМ-ы есть командыный режим, когда в клавиши вкладываем какие-то комады. это режим по умочанию. Основные команды ввода в текста: i a I o O;
-```sh
-$ vim .travis.yml
-/lang<CR>o
-services:
-- docker<ESC> //  сама клавиша
-jVGdo
-script:
-- docker build -t logger .<ESC>
-:wq
-```
-18. Выполянем заполнение репозитория: добавляем Dockerfile, .travis.yml. Выполняем коминт и пуш.
-```sh
-$ git add Dockerfile
-$ git add .travis.yml
-$ git commit -m"adding Dockerfile"
-$ git push origin master
-```
-19. Нужно сделать Docker работающим внутри travis'а. Выполянем это.
-```sh
-$ travis login --auto
-$ travis enable
-```
-*если есть синтаксические ошибки - выдаст ошибки в самом билде.
-
-
+# Настраиваем скрипт для добавления сообщения к тегу
+$ test -r ~/.bash_profile && echo 'export GPG_TTY=$(tty)' >> ~/.bash_profile
+$ echo 'export GPG_TTY=$(tty)' >> ~/.profile
 ```
 
-## Links
-
-- [Book](https://www.dockerbook.com)
-- [Instructions](https://docs.docker.com/engine/reference/builder/)
-
+```sh
+$ cmake -H. -B_build -DCPACK_GENERATOR="TGZ"    #генерируем пакет с раширением .tar.gz
+$ cmake --build _build --target package        #запускаем сборку package
 ```
-Copyright (c) 2015-2021 The ISC Authors
+
+```sh
+$ travis login --auto         #авторизируемся на travis
+$ travis enable              #делаем проект доступным
+```
+
+```sh
+$ git tag -s v0.1.0.0                   #создаем тега с сообщением с информацией
+$ git tag -v v0.1.0.0                  #верифицируем тег
+$ git show v0.1.0.0                   #посмотрим изменения
+$ git push origin master --tags      #отправляем измения на Github
+```
+
+```sh
+$ github-release --version              #узнаем версию
+github-release v0.10.0
+$ github-release info -u ${GITHUB_USERNAME} -r lab09
+$ github-release release \              #создаем релиза
+    --user ${GITHUB_USERNAME} \
+    --repo lab09 \
+    --tag v0.1.0.0 \
+    --name "libprint" \
+    --description "my first release"
+```
+
+```sh
+#Добавим артефакт с указанием ОС и архитектуры, на которых происходила компиляция библиотеки
+$ export PACKAGE_OS=`uname -s` PACKAGE_ARCH=`uname -m`        #
+$ export PACKAGE_FILENAME=print-${PACKAGE_OS}-${PACKAGE_ARCH}.tar.gz       #
+$ github-release upload \       #
+    --user ${GITHUB_USERNAME} \
+    --repo lab09 \
+    --tag v0.1.0.0 \
+    --name "${PACKAGE_FILENAME}" \
+    --file _build/*.tar.gz
+```
+
+```sh
+$ github-release info -u ${GITHUB_USERNAME} -r lab09 
+$ wget https://github.com/${GITHUB_USERNAME}/lab09/releases/download/v0.1.0.0/${PACKAGE_FILENAME}  #скачаем артефакт
+$ tar -ztf ${PACKAGE_FILENAME}                                                                    #выводим на экран содержимого архива
 ```
