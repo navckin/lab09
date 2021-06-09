@@ -1,0 +1,5 @@
+/home/anya/navckin/workspace/projects/lab09/_build/_CPack_Packages/Linux/TGZ/print-0.1.0.0-Linux/bin/demo
+/home/anya/navckin/workspace/projects/lab09/_build/_CPack_Packages/Linux/TGZ/print-0.1.0.0-Linux/lib/libprint.a
+/home/anya/navckin/workspace/projects/lab09/_build/_CPack_Packages/Linux/TGZ/print-0.1.0.0-Linux/include/print.hpp
+/home/anya/navckin/workspace/projects/lab09/_build/_CPack_Packages/Linux/TGZ/print-0.1.0.0-Linux/cmake/print-config.cmake
+/home/anya/navckin/workspace/projects/lab09/_build/_CPack_Packages/Linux/TGZ/print-0.1.0.0-Linux/cmake/print-config-noconfig.cmake

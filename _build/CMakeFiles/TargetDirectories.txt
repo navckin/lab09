@@ -1,0 +1,10 @@
+/home/anya/navckin/workspace/projects/lab09/_build/CMakeFiles/install/strip.dir
+/home/anya/navckin/workspace/projects/lab09/_build/CMakeFiles/edit_cache.dir
+/home/anya/navckin/workspace/projects/lab09/_build/CMakeFiles/package_source.dir
+/home/anya/navckin/workspace/projects/lab09/_build/CMakeFiles/install.dir
+/home/anya/navckin/workspace/projects/lab09/_build/CMakeFiles/list_install_components.dir
+/home/anya/navckin/workspace/projects/lab09/_build/CMakeFiles/rebuild_cache.dir
+/home/anya/navckin/workspace/projects/lab09/_build/CMakeFiles/package.dir
+/home/anya/navckin/workspace/projects/lab09/_build/CMakeFiles/install/local.dir
+/home/anya/navckin/workspace/projects/lab09/_build/CMakeFiles/demo.dir
+/home/anya/navckin/workspace/projects/lab09/_build/CMakeFiles/print.dir
