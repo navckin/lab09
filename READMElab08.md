@@ -28,9 +28,6 @@ $ export GPG_PACKAGE_NAME=<gpg2|gpg>          #указываем, в какой
 ```sh
 # for *-nix system
 $ $PACKAGE_MANAGER install xclip                     #скачиваем утилиту xclip
-Updating Homebrew...
-==> Auto-updated Homebrew!
-....................................
 $ alias gsed=sed                                    #заменяем команду sed на gsed
 $ alias pbcopy='xclip -selection clipboard'        #заменяем команду pbcopy на xclip -selection clipboard
 $ alias pbpaste='xclip -selection clipboard -o'   #заменяем команду pbpaste на xclip -selection clipboard -o
