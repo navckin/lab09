@@ -7,7 +7,7 @@ $ open https://help.github.com/articles/creating-releases/
 ```
 Возникли такие проблемы: 
 не было команды go ---> полезная инф. была найдена на таком сайте: https://www.digitalocean.com/community/tutorials/how-to-install-go-and-set-up-a-local-programming-environment-on-ubuntu-18-04-ru
-не работала команда гитхаб-релиз ---> https://github.com/github-release/github-release 
+не работала команда гитхаб-релиз,помог сайт ---> https://github.com/github-release/github-release 
 ## Tasks
 
 - [х] 1. Создать публичный репозиторий с названием **lab09** на сервисе **GitHub**
